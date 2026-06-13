@@ -88,7 +88,7 @@
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
-    "vitest": "^0.17.1"
+    "vitest": "^3.2.6"
   },
   "overrides": {
     "graphql": "^15.5.0"
