@@ -93,7 +93,7 @@ RUN set -a && source /env && set +a \
 COPY api /app/api
 RUN set -a && source /env && set +a \
     && go env \
-    && CGO_LDFLAGS="${CGO_LDFLAGS:-} -Wl,-rpath-link,/usr/local/lib -lheif -lwmflite-0.2 -lzip" go build -v -o photoview .
+    && CGO_LDFLAGS="${CGO_LDFLAGS:-} -L/usr/local/lib -Wl,-rpath-link,/usr/local/lib -Wl,-l:libheif.so.1 -Wl,-l:libwmflite-0.2.so.7 -Wl,-l:libzip.so.5" go build -v -o photoview .
 
 ### Build release image ###
 FROM debian:trixie-slim AS release
