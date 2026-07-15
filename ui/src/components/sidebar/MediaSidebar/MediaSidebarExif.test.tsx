@@ -1,6 +1,6 @@
 import { vi } from 'vitest'
 // Mock react-i18next following the project pattern
-const mockUseTranslation = vi.fn()
+const mockUseTranslation = vi.hoisted(() => vi.fn())
 vi.mock('react-i18next', () => ({
   useTranslation: mockUseTranslation,
 }))

@@ -1,5 +1,5 @@
 ### Build UI ###
-FROM --platform=${BUILDPLATFORM:-linux/amd64} node:18 AS ui
+FROM --platform=${BUILDPLATFORM:-linux/amd64} node:22 AS ui
 # See for details: https://github.com/hadolint/hadolint/wiki/DL4006
 SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
 
@@ -9,7 +9,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /app/ui
 
 COPY ui/package.json ui/package-lock.json /app/ui/
-# NPM 10.x is the latest supported version for Node.js 18.x
+# Keep npm 10 for compatibility with the committed lockfile.
 RUN npm install --global npm@10 \
     && if [ "$NODE_ENV" = "production" ]; then \
         echo "Installing production dependencies only..."; \
@@ -93,7 +93,7 @@ RUN set -a && source /env && set +a \
 COPY api /app/api
 RUN set -a && source /env && set +a \
     && go env \
-    && go build -v -o photoview .
+    && CGO_LDFLAGS="${CGO_LDFLAGS:-} -Wl,-rpath-link,/usr/local/lib" go build -v -o photoview .
 
 ### Build release image ###
 FROM debian:trixie-slim AS release
