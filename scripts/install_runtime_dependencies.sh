@@ -5,7 +5,7 @@ apt-get update
 apt-get install -y --no-install-recommends curl libimage-exiftool-perl
 
 # libheif dependencies
-apt-get install -y --no-install-recommends libdav1d7 librav1e0.7 libde265-0 libx265-215 libjpeg62-turbo libopenh264-8 libpng16-16t64 libnuma1 zlib1g
+apt-get install -y --no-install-recommends libdav1d7 librav1e0.7 libde265-0 libx265-215 libjpeg62-turbo libopenh264-8 libpng16-16t64 libnuma1 zlib1g libheif1 libwmflite-0.2-7 libzip5
 
 # libraw dependencies
 apt-get install -y --no-install-recommends libjpeg62-turbo liblcms2-2 zlib1g libgomp1
