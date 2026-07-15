@@ -93,7 +93,7 @@ RUN set -a && source /env && set +a \
 COPY api /app/api
 RUN set -a && source /env && set +a \
     && go env \
-    && go build -v -o photoview .
+    && CGO_LDFLAGS="${CGO_LDFLAGS:-} -Wl,-rpath-link,/usr/local/lib" go build -v -o photoview .
 
 ### Build release image ###
 FROM debian:trixie-slim AS release

@@ -6,7 +6,7 @@ import { MY_FACES_QUERY } from '../PeoplePage'
 import { COMBINE_FACES_MUTATION } from './MergeFaceGroupsModal'
 
 // Mock useNavigate before any imports that use it
-const navigate = vi.fn()
+const navigate = vi.hoisted(() => vi.fn())
 vi.mock('react-router-dom', async () => {
     const actual: object = await vi.importActual('react-router-dom')
     return { ...actual, useNavigate: () => navigate }
@@ -22,30 +22,34 @@ beforeAll(() => {
     } as any
 })
 
+// Mock SelectFaceGroupTable to simplify selection logic
+vi.mock('./SelectFaceGroupTable', () => {
+    const idToTestId = (id: string): string => `facegroup-${id}`
+
+    return {
+        __esModule: true,
+        default: ({ faceGroups, selectedFaceGroups, toggleSelectedFaceGroup, title }: any) => (
+            <div>
+                <div>{title}</div>
+                {faceGroups.map((fg: any) => (
+                    <button
+                        key={fg.id}
+                        data-testid={idToTestId(fg.id)}
+                        onClick={() => toggleSelectedFaceGroup(fg)}
+                        style={{ fontWeight: selectedFaceGroups.has(fg) ? 'bold' : 'normal' }}
+                    >
+                        {fg.label}
+                    </button>
+                ))}
+            </div>
+        ),
+    }
+})
+
 // Helper function to convert face group ID to test ID
 function idToTestId(id: string): string {
     return `facegroup-${id}`
 }
-
-// Mock SelectFaceGroupTable to simplify selection logic
-vi.mock('./SelectFaceGroupTable', () => ({
-    __esModule: true,
-    default: ({ faceGroups, selectedFaceGroups, toggleSelectedFaceGroup, title }: any) => (
-        <div>
-            <div>{title}</div>
-            {faceGroups.map((fg: any) => (
-                <button
-                    key={fg.id}
-                    data-testid={idToTestId(fg.id)}
-                    onClick={() => toggleSelectedFaceGroup(fg)}
-                    style={{ fontWeight: selectedFaceGroups.has(fg) ? 'bold' : 'normal' }}
-                >
-                    {fg.label}
-                </button>
-            ))}
-        </div>
-    ),
-}))
 
 const mockFaceGroups = ["Alice", "Bob", "Charlie", "David", "Felix"].map((name, index) => { return { __typename: 'FaceGroup', id: index.toString(), label: name, imageFaceCount: 0, imageFaces: [] }})
 

@@ -326,7 +326,7 @@ We can't keep verifying below commands on each environment. People may need to s
     - `sqlite`: the SQLite DBMS, useful to interact with Photoview's SQLite DB directly if you use it in your development environment.
 - UI
   - Required packages:
-    - `node` = 18
+    - `node` = 22 (or 20.19+)
 
 In Debian/Ubuntu, install dependencies:
 
@@ -349,8 +349,8 @@ Please follow the package manager guidance if you don't use `apt` or `homebrew`.
 For `node`, recommend to use [nvm](https://github.com/nvm-sh/nvm). Follow [Installing and Updating](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) to install `nvm` locally, then:
 
 ```console
-$ nvm install 18
-$ nvm use 18
+$ nvm install 22
+$ nvm use 22
 ```
 
 You can install `node` with other package manager if you like.
